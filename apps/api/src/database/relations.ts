@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
   activityTable,
+  giteaIntegrationTable,
   githubIntegrationTable,
   labelTable,
   notificationTable,
@@ -61,6 +62,7 @@ export const projectTableRelations = relations(
     }),
     tasks: many(taskTable),
     githubIntegration: many(githubIntegrationTable),
+    giteaIntegration: many(giteaIntegrationTable),
   }),
 );
 
@@ -122,6 +124,16 @@ export const githubIntegrationTableRelations = relations(
   ({ one }) => ({
     project: one(projectTable, {
       fields: [githubIntegrationTable.projectId],
+      references: [projectTable.id],
+    }),
+  }),
+);
+
+export const giteaIntegrationTableRelations = relations(
+  giteaIntegrationTable,
+  ({ one }) => ({
+    project: one(projectTable, {
+      fields: [giteaIntegrationTable.projectId],
       references: [projectTable.id],
     }),
   }),

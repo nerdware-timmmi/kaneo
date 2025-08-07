@@ -74,6 +74,22 @@ async function updateTask(
     });
   }
 
+  // Publish general task updated event for any other changes
+  if (
+    existingTask.title !== title ||
+    existingTask.description !== description
+  ) {
+    await publishEvent("task.updated", {
+      taskId: updatedTask.id,
+      userEmail: updatedTask.userEmail,
+      oldTitle: existingTask.title,
+      newTitle: title,
+      oldDescription: existingTask.description,
+      newDescription: description,
+      title: updatedTask.title,
+    });
+  }
+
   return updatedTask;
 }
 
