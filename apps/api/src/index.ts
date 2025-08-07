@@ -7,6 +7,7 @@ import { cors } from "hono/cors";
 import activity from "./activity";
 import config from "./config";
 import db from "./database";
+import externalLinksRoute from "./external-links";
 import giteaIntegration from "./gitea-integration";
 import githubIntegration from "./github-integration";
 import label from "./label";
@@ -58,6 +59,8 @@ const githubIntegrationRoute = app.route(
 );
 
 const giteaIntegrationRoute = app.route("/gitea-integration", giteaIntegration);
+
+const externalLinksRouteApp = app.route("/external-links", externalLinksRoute);
 
 const publicProjectRoute = app.get("/public-project/:id", async (c) => {
   const { id } = c.req.param();
@@ -160,6 +163,7 @@ export type AppType =
   | typeof publicProjectRoute
   | typeof githubIntegrationRoute
   | typeof giteaIntegrationRoute
+  | typeof externalLinksRouteApp
   | typeof configRoute;
 
 export default app;
