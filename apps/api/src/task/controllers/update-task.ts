@@ -14,6 +14,7 @@ async function updateTask(
   priority: string,
   position: number,
   userEmail?: string,
+  source?: string, // Add source parameter for loop prevention
 ) {
   const existingTask = await db.query.taskTable.findFirst({
     where: eq(taskTable.id, id),
@@ -87,6 +88,7 @@ async function updateTask(
       oldDescription: existingTask.description,
       newDescription: description,
       title: updatedTask.title,
+      source, // Include source in the event
     });
   }
 
